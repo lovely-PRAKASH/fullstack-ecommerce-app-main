@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react'
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 const addUser=async(user)=>{
   return await axios.post(import.meta.env.VITE_API_URL+"/auth/adduser", user)
 }
@@ -9,6 +10,8 @@ const Register = () => {
   const [username, setUserName]=useState("");
   const [email, setEmail]=useState("");
   const [password, setPassword]=useState("");
+
+  const navigate=useNavigate();
 
   const {mutate,isLoading, isError, error, isFetching }=useMutation({
     mutationFn:addUser,
@@ -20,6 +23,7 @@ const handleSubmit=(e)=>{
   const user={username, email, password }
   console.log(user);
   mutate(user)
+  navigate('/')
 }
 if (isLoading) {
   return <div>Loading....</div>
