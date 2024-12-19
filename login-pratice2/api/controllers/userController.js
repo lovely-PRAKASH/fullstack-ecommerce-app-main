@@ -19,3 +19,21 @@ exports.addUser=async(req,res)=>{
        })
     }
 }
+
+exports.getUsers=async(req,res)=>{
+    try {
+        const users= await userModel.find().select("-password");
+        
+        res.status(200).json({
+            success:true,
+            message:"all users are getted",
+            users
+        })
+
+    } catch (error) {
+        res.status(400).json({
+            success:false,
+            error:error.message
+        })
+    }
+}
